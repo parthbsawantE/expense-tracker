@@ -10,19 +10,62 @@ export default function Login() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    await signInWithEmailAndPassword(auth, email, password);
-    navigate("/");
+
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      navigate("/dashboard");
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   return (
-    <div className="min-h-screen flex justify-center items-center">
-      <form onSubmit={handleLogin} className="border p-6 w-80 space-y-4">
-        <h1 className="text-xl font-bold">Login</h1>
-        <input className="border p-2 w-full" placeholder="Email" onChange={e => setEmail(e.target.value)} />
-        <input className="border p-2 w-full" placeholder="Password" type="password" onChange={e => setPassword(e.target.value)} />
-        <button className="bg-blue-600 text-white w-full p-2">Login</button>
-        <Link to="/register">Go to Register</Link>
-      </form>
+    <div className="min-h-screen flex items-center justify-center bg-bgApp-light dark:bg-bgApp-dark px-4">
+      <div className="w-full max-w-md bg-card-light dark:bg-card-dark border border-borderSubtle-light dark:border-borderSubtle-dark rounded-2xl shadow-card p-8">
+        {/* Header */}
+        <div className="mb-6 text-center">
+          <h1 className="text-2xl font-semibold text-textMain-light dark:text-textMain-dark">
+            Welcome back
+          </h1>
+          <p className="text-sm text-textMuted-light dark:text-textMuted-dark mt-1">
+            Login to continue managing your expenses
+          </p>
+        </div>
+
+        {/* Form */}
+        <form onSubmit={handleLogin} className="space-y-4">
+          <input
+            type="email"
+            placeholder="Email address"
+            className="w-full rounded-md border border-borderSubtle-light dark:border-borderSubtle-dark px-3 py-2 bg-transparent focus:outline-none focus:ring-2 focus:ring-primary"
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+
+          <input
+            type="password"
+            placeholder="Password"
+            className="w-full rounded-md border border-borderSubtle-light dark:border-borderSubtle-dark px-3 py-2 bg-transparent focus:outline-none focus:ring-2 focus:ring-primary"
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+
+          <button className="w-full py-2 rounded-md bg-primary text-white font-medium hover:bg-primaryHover transition">
+            Login
+          </button>
+        </form>
+
+        {/* Footer */}
+        <p className="mt-6 text-center text-sm text-textMuted-light dark:text-textMuted-dark">
+          Don’t have an account?{" "}
+          <Link
+            to="/register"
+            className="text-primary font-medium hover:underline"
+          >
+            Create one
+          </Link>
+        </p>
+      </div>
     </div>
   );
 }

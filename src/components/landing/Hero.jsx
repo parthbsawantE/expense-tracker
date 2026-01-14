@@ -2,50 +2,59 @@ import { Link } from "react-router-dom";
 
 export default function Hero() {
   return (
-    <section className="bg-[#0f172a] text-white">
-      <div className="max-w-7xl mx-auto px-6 py-20 grid md:grid-cols-2 gap-10 items-center">
-        
+    <section className="relative overflow-hidden bg-bgApp-light dark:bg-bgApp-dark">
+      {/* Gradient background */}
+      <div className="absolute inset-0 -z-10 bg-gradient-to-br from-primary/10 via-transparent to-primary/5"></div>
+
+      <div className="container py-28 grid gap-16 md:grid-cols-2 items-center">
         {/* Left Content */}
         <div>
-          <h1 className="text-4xl md:text-5xl font-bold leading-tight">
-            Take Control of Your <span className="text-yellow-400">Finances</span>
+          <span className="inline-block mb-4 rounded-full bg-primary/10 text-primary px-4 py-1 text-sm font-medium">
+            Smart Personal Finance
+          </span>
+
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-textMain-light dark:text-textMain-dark">
+            Take Control of Your{" "}
+            <span className="text-primary">Finances</span>
           </h1>
 
-          <p className="mt-6 text-gray-300 text-lg">
-            Track your expenses, visualize spending patterns, manage budgets, and make smarter financial decisions — all from one powerful dashboard.
+          <p className="mt-6 text-lg text-textMuted-light dark:text-textMuted-dark max-w-xl">
+            Track expenses, visualize spending patterns, manage budgets, and make
+            smarter financial decisions — all from one powerful dashboard.
           </p>
 
-          <div className="mt-8 flex gap-4">
+          <div className="mt-10 flex flex-wrap gap-4">
             <Link
               to="/register"
-              className="px-6 py-3 bg-yellow-400 text-black font-semibold rounded-lg hover:bg-yellow-300 transition"
+              className="px-6 py-3 rounded-md bg-primary text-white font-semibold hover:bg-primaryHover transition"
             >
               Get Started Free
             </Link>
 
             <Link
               to="/login"
-              className="px-6 py-3 border border-gray-500 rounded-lg hover:bg-white hover:text-black transition"
+              className="px-6 py-3 rounded-md border border-borderSubtle-light dark:border-borderSubtle-dark text-textMain-light dark:text-textMain-dark hover:bg-card-light dark:hover:bg-card-dark transition"
             >
               Login
             </Link>
           </div>
         </div>
 
-        {/* Right Visual */}
+        {/* Right Visual / Mock Preview */}
         <div className="hidden md:block">
-          <div className="bg-[#111827] border border-gray-700 rounded-xl p-6 shadow-lg">
-            <p className="text-sm text-gray-400 mb-4">Dashboard Preview</p>
+          <div className="rounded-2xl bg-card-light dark:bg-card-dark border border-borderSubtle-light dark:border-borderSubtle-dark shadow-card p-6">
+            <p className="text-sm text-textMuted-light dark:text-textMuted-dark mb-4">
+              Dashboard Preview
+            </p>
 
-            <div className="space-y-3">
-              <div className="h-4 bg-gray-700 rounded w-3/4"></div>
-              <div className="h-4 bg-gray-700 rounded w-2/3"></div>
-              <div className="h-4 bg-gray-700 rounded w-4/5"></div>
-              <div className="h-4 bg-gray-700 rounded w-1/2"></div>
+            <div className="space-y-4">
+              <div className="h-4 rounded bg-gradient-to-r from-primary/40 to-primary/10 w-3/4"></div>
+              <div className="h-4 rounded bg-gradient-to-r from-primary/40 to-primary/10 w-2/3"></div>
+              <div className="h-4 rounded bg-gradient-to-r from-primary/40 to-primary/10 w-4/5"></div>
+              <div className="h-4 rounded bg-gradient-to-r from-primary/40 to-primary/10 w-1/2"></div>
             </div>
           </div>
         </div>
-
       </div>
     </section>
   );

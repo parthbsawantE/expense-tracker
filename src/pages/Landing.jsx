@@ -5,10 +5,21 @@ import Footer from "../components/landing/Footer";
 
 export default function Landing() {
   return (
-    <div className="min-h-screen bg-white text-gray-900">
+    <div className="min-h-screen bg-bgApp-light dark:bg-bgApp-dark text-textMain-light dark:text-textMain-dark">
+      {/* Landing Navbar (public) */}
       <Navbar />
-      <Hero />
-      <Features />
+
+      {/* Hero Section */}
+      <main className="overflow-hidden">
+        <Hero />
+
+        {/* Features Section Wrapper */}
+        <section className="container py-24">
+          <Features />
+        </section>
+      </main>
+
+      {/* Footer */}
       <Footer />
     </div>
   );

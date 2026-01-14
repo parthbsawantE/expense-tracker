@@ -1,14 +1,36 @@
 export default function Footer() {
   return (
-    <footer className="bg-gray-100 border-t">
-      <div className="max-w-7xl mx-auto px-6 py-6 flex flex-col md:flex-row justify-between items-center text-sm text-gray-600">
-        
-        <p>© {new Date().getFullYear()} ExpenseTracker. All rights reserved.</p>
+    <footer className="bg-card-light dark:bg-card-dark border-t border-borderSubtle-light dark:border-borderSubtle-dark">
+      <div className="container py-10 flex flex-col md:flex-row items-center justify-between gap-6 text-sm">
+        {/* Brand / Copyright */}
+        <p className="text-textMuted-light dark:text-textMuted-dark">
+          © {new Date().getFullYear()}{" "}
+          <span className="font-medium text-textMain-light dark:text-textMain-dark">
+            ExpenseTracker
+          </span>
+          . All rights reserved.
+        </p>
 
-        <div className="flex gap-4 mt-2 md:mt-0">
-          <a href="#" className="hover:text-indigo-600">Privacy</a>
-          <a href="#" className="hover:text-indigo-600">Terms</a>
-          <a href="#" className="hover:text-indigo-600">Contact</a>
+        {/* Footer Links */}
+        <div className="flex gap-6">
+          <a
+            href="#"
+            className="text-textMuted-light dark:text-textMuted-dark hover:text-primary transition"
+          >
+            Privacy
+          </a>
+          <a
+            href="#"
+            className="text-textMuted-light dark:text-textMuted-dark hover:text-primary transition"
+          >
+            Terms
+          </a>
+          <a
+            href="#"
+            className="text-textMuted-light dark:text-textMuted-dark hover:text-primary transition"
+          >
+            Contact
+          </a>
         </div>
       </div>
     </footer>

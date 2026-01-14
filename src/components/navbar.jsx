@@ -1,10 +1,12 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { signOut } from "firebase/auth";
 import { auth } from "../services/firebase";
 import { useState, useEffect } from "react";
 
 export default function Navbar() {
   const navigate = useNavigate();
+  const location = useLocation();
+
   const [darkMode, setDarkMode] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -34,33 +36,39 @@ export default function Navbar() {
     navigate("/login");
   };
 
+  const isActive = (path) =>
+    location.pathname === path
+      ? "text-primary font-semibold"
+      : "text-textMuted-light dark:text-textMuted-dark hover:text-primary";
+
   return (
-    
-    <nav className="bg-gray-800 dark:bg-gray-900 text-white px-6 py-4">
-      <div className="flex justify-between items-center">
+    <nav className="sticky top-0 z-50 bg-card-light dark:bg-card-dark border-b border-borderSubtle-light dark:border-borderSubtle-dark shadow-soft">
+      <div className="container flex items-center justify-between h-16">
         {/* Logo */}
-        <h1 className="text-xl font-bold">Expense Tracker</h1>
+        <h1 className="text-lg font-semibold text-textMain-light dark:text-textMain-dark">
+          Expense<span className="text-primary">Tracker</span>
+        </h1>
 
         {/* Desktop Menu */}
-        <div className="hidden md:flex gap-6 items-center">
-          <Link to="/" className="hover:underline">
+        <div className="hidden md:flex items-center gap-8">
+          <Link to="/dashboard" className={isActive("/dashboard")}>
             Dashboard
           </Link>
 
-          <Link to="/transactions" className="hover:underline">
+          <Link to="/transactions" className={isActive("/transactions")}>
             Transactions
           </Link>
 
           <button
             onClick={toggleDarkMode}
-            className="border px-3 py-1 rounded"
+            className="px-3 py-1.5 rounded-md text-sm border border-borderSubtle-light dark:border-borderSubtle-dark text-textMuted-light dark:text-textMuted-dark hover:text-textMain-light dark:hover:text-textMain-dark transition"
           >
-            {darkMode ? "Light" : "Dark"}
+            {darkMode ? "Light Mode" : "Dark Mode"}
           </button>
 
           <button
             onClick={handleLogout}
-            className="bg-red-600 px-3 py-1 rounded hover:bg-red-700"
+            className="px-4 py-1.5 rounded-md text-sm bg-danger text-white hover:opacity-90 transition"
           >
             Logout
           </button>
@@ -68,7 +76,7 @@ export default function Navbar() {
 
         {/* Mobile Menu Button */}
         <button
-          className="md:hidden text-2xl"
+          className="md:hidden text-2xl text-textMain-light dark:text-textMain-dark"
           onClick={() => setMenuOpen(!menuOpen)}
         >
           ☰
@@ -77,25 +85,33 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       {menuOpen && (
-        <div className="md:hidden mt-4 flex flex-col gap-4">
-          <Link to="/" onClick={() => setMenuOpen(false)}>
+        <div className="md:hidden px-4 pb-4 space-y-4 bg-card-light dark:bg-card-dark border-t border-borderSubtle-light dark:border-borderSubtle-dark">
+          <Link
+            to="/dashboard"
+            onClick={() => setMenuOpen(false)}
+            className={`block ${isActive("/dashboard")}`}
+          >
             Dashboard
           </Link>
 
-          <Link to="/transactions" onClick={() => setMenuOpen(false)}>
+          <Link
+            to="/transactions"
+            onClick={() => setMenuOpen(false)}
+            className={`block ${isActive("/transactions")}`}
+          >
             Transactions
           </Link>
 
           <button
             onClick={toggleDarkMode}
-            className="border px-3 py-1 rounded w-fit"
+            className="block px-3 py-1.5 rounded-md text-sm border border-borderSubtle-light dark:border-borderSubtle-dark"
           >
-            {darkMode ? "Light" : "Dark"}
+            {darkMode ? "Light Mode" : "Dark Mode"}
           </button>
 
           <button
             onClick={handleLogout}
-            className="bg-red-600 px-3 py-1 rounded hover:bg-red-700 w-fit"
+            className="block px-4 py-1.5 rounded-md text-sm bg-danger text-white"
           >
             Logout
           </button>
@@ -104,5 +120,3 @@ export default function Navbar() {
     </nav>
   );
 }
-
-

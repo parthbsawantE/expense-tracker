@@ -128,55 +128,138 @@ export default function Transactions() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 dark:bg-gray-950 text-gray-900 dark:text-gray-100 p-6">
-      <div className="max-w-3xl mx-auto">
-        <h1 className="text-2xl font-bold mb-4">Transactions</h1>
+    <div className="min-h-screen bg-bgApp-light dark:bg-bgApp-dark text-textMain-light dark:text-textMain-dark">
+      <div className="container py-8 max-w-5xl">
+        {/* Header */}
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8 gap-4">
+          <h1 className="text-2xl font-semibold">Transactions</h1>
 
-        <div className="flex gap-4 mb-6">
-          <button onClick={exportCSV} className="bg-green-600 text-white px-4 py-2 rounded">
-            Export CSV
-          </button>
-          <button onClick={exportPDF} className="bg-red-600 text-white px-4 py-2 rounded">
-            Export PDF
-          </button>
+          <div className="flex gap-3">
+            <button
+              onClick={exportCSV}
+              className="px-4 py-2 rounded-md bg-success text-white text-sm hover:opacity-90 transition"
+            >
+              Export CSV
+            </button>
+            <button
+              onClick={exportPDF}
+              className="px-4 py-2 rounded-md bg-danger text-white text-sm hover:opacity-90 transition"
+            >
+              Export PDF
+            </button>
+          </div>
         </div>
 
-        <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-4 mb-6">
-          <input className="border p-2 bg-white dark:bg-gray-800" placeholder="Amount"
-            value={form.amount} onChange={(e) => setForm({ ...form, amount: e.target.value })} />
-          <select className="border p-2 bg-white dark:bg-gray-800"
-            value={form.type} onChange={(e) => setForm({ ...form, type: e.target.value })}>
-            <option value="expense">Expense</option>
-            <option value="income">Income</option>
-          </select>
-          <select className="border p-2 bg-white dark:bg-gray-800"
-            value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })}>
-            {categories.map((c) => <option key={c}>{c}</option>)}
-          </select>
-          <input type="date" className="border p-2 bg-white dark:bg-gray-800"
-            value={form.date} onChange={(e) => setForm({ ...form, date: e.target.value })} />
-          <input className="border p-2 col-span-2 bg-white dark:bg-gray-800"
-            placeholder="Note" value={form.note}
-            onChange={(e) => setForm({ ...form, note: e.target.value })} />
-          <button className="bg-blue-600 text-white p-2 col-span-2">
-            {editingId ? "Update" : "Add"} Transaction
-          </button>
-        </form>
+        {/* Add / Edit Transaction */}
+        <div className="bg-card-light dark:bg-card-dark border border-borderSubtle-light dark:border-borderSubtle-dark rounded-2xl p-6 shadow-soft mb-10">
+          <h2 className="text-lg font-semibold mb-4">
+            {editingId ? "Edit Transaction" : "Add Transaction"}
+          </h2>
 
-        <div className="space-y-3">
+          <form onSubmit={handleSubmit} className="grid md:grid-cols-2 gap-4">
+            <input
+              className="rounded-md border border-borderSubtle-light dark:border-borderSubtle-dark px-3 py-2 bg-transparent"
+              placeholder="Amount"
+              value={form.amount}
+              onChange={(e) =>
+                setForm({ ...form, amount: e.target.value })
+              }
+            />
+
+            <select
+              className="rounded-md border border-borderSubtle-light dark:border-borderSubtle-dark px-3 py-2 bg-transparent"
+              value={form.type}
+              onChange={(e) =>
+                setForm({ ...form, type: e.target.value })
+              }
+            >
+              <option value="expense">Expense</option>
+              <option value="income">Income</option>
+            </select>
+
+            <select
+              className="rounded-md border border-borderSubtle-light dark:border-borderSubtle-dark px-3 py-2 bg-transparent"
+              value={form.category}
+              onChange={(e) =>
+                setForm({ ...form, category: e.target.value })
+              }
+            >
+              {categories.map((c) => (
+                <option key={c}>{c}</option>
+              ))}
+            </select>
+
+            <input
+              type="date"
+              className="rounded-md border border-borderSubtle-light dark:border-borderSubtle-dark px-3 py-2 bg-transparent"
+              value={form.date}
+              onChange={(e) =>
+                setForm({ ...form, date: e.target.value })
+              }
+            />
+
+            <input
+              className="rounded-md border border-borderSubtle-light dark:border-borderSubtle-dark px-3 py-2 bg-transparent md:col-span-2"
+              placeholder="Note"
+              value={form.note}
+              onChange={(e) =>
+                setForm({ ...form, note: e.target.value })
+              }
+            />
+
+            <button className="md:col-span-2 px-4 py-2 rounded-md bg-primary text-white hover:bg-primaryHover transition">
+              {editingId ? "Update" : "Add"} Transaction
+            </button>
+          </form>
+        </div>
+
+        {/* Transactions List */}
+        <div className="space-y-4">
           {filteredTransactions.map((t) => (
-            <div key={t.id}
-              className="border p-3 flex justify-between items-center bg-white dark:bg-gray-900 rounded">
+            <div
+              key={t.id}
+              className="bg-card-light dark:bg-card-dark border border-borderSubtle-light dark:border-borderSubtle-dark rounded-xl p-4 flex items-center justify-between shadow-soft"
+            >
               <div>
-                <p className="font-semibold">₹{t.amount} — {t.type}</p>
-                <p className="text-sm text-gray-500">{t.category} | {t.date} | {t.note}</p>
+                <p className="font-medium">
+                  ₹{t.amount}{" "}
+                  <span
+                    className={
+                      t.type === "income"
+                        ? "text-success"
+                        : "text-danger"
+                    }
+                  >
+                    ({t.type})
+                  </span>
+                </p>
+                <p className="text-sm text-textMuted-light dark:text-textMuted-dark">
+                  {t.category} • {t.date} {t.note && `• ${t.note}`}
+                </p>
               </div>
-              <div className="flex gap-3">
-                <button onClick={() => handleEdit(t)} className="text-blue-500">Edit</button>
-                <button onClick={() => handleDelete(t.id)} className="text-red-500">Delete</button>
+
+              <div className="flex gap-4 text-sm">
+                <button
+                  onClick={() => handleEdit(t)}
+                  className="text-primary hover:underline"
+                >
+                  Edit
+                </button>
+                <button
+                  onClick={() => handleDelete(t.id)}
+                  className="text-danger hover:underline"
+                >
+                  Delete
+                </button>
               </div>
             </div>
           ))}
+
+          {filteredTransactions.length === 0 && (
+            <p className="text-center text-textMuted-light dark:text-textMuted-dark">
+              No transactions found.
+            </p>
+          )}
         </div>
       </div>
     </div>
